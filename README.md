@@ -2,7 +2,7 @@
 需要安裝Flask才能使用
 Flask資料庫 
 ```
-http://flask.pocoo.org/docs/0.12/
+(http://flask.pocoo.org/docs/0.12/)
 ```
 安裝指令
 ```
