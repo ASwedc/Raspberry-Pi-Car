@@ -1,0 +1,205 @@
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script language="javascript" type="text/javascript">
+      function Button_onclick(direction) {
+        $.ajax({ url: '/' + direction });
+      }
+    </script>  
+    <script language="javascript" type="text/javascript">
+      function text_forward() {
+        var x = document.getElementById("a").value;
+        document.getElementById("movtion").innerHTML = x;
+      }
+      function text_left() {
+        var x = document.getElementById("b").value;
+        document.getElementById("movtion").innerHTML = x;
+      }
+
+      function text_right() {
+        var x = document.getElementById("d").value;
+        document.getElementById("movtion").innerHTML = x;
+      }
+      function text_backward() {
+        var x = document.getElementById("e").value;
+        document.getElementById("movtion").innerHTML = x;
+      }
+    </script>
+    <script language="javascript" type="text/javascript">
+
+      function video_on()
+      {
+        //讓圖出現
+        document.getElementById('ImgidA').style.display = 'block';
+        //改變座標
+        document.getElementById('ImgidA').style.left = '座標';
+        document.getElementById('ImgidA').style.top = '座標';
+        //改變圖
+        document.getElementById('ImgidA').src = "{{ url_for('video_feed') }}";
+      }
+      function video_off()
+      {
+        //讓圖出現
+        document.getElementById('ImgidA').style.display = 'block';
+        //改變座標
+        document.getElementById('ImgidA').style.left = '座標';
+        document.getElementById('ImgidA').style.top = '';
+        //改變圖
+        document.getElementById('ImgidA').src = '{{ url_for('static', filename='block.png') }}';
+      }
+      function video_capture()
+      {
+        //讓圖出現
+        document.getElementById('fullsized_image_holder').style.display = 'block';
+        //改變座標
+        document.getElementById('fullsized_image_holder').style.left = '座標';
+        document.getElementById('fullsized_image_holder').style.top = '座標';
+        //改變圖
+        document.getElementById('fullsized_image_holder').src = '{{ url_for('capture_feed') }}';
+      }
+    </script>  
+
+    <script type="text/javascript">
+      function prepHref(linkElement) {
+        var myDiv = document.getElementById('fullsized_image');
+        var myImage = myDiv.children[0];
+        linkElement.href = myImage.src;
+      }
+    </script>
+
+    <title> Raspberry Pi Car Web Control</title>
+  </head>
+
+	<body oncontextmenu = "return false">
+
+    <div>
+
+    </div>
+    <div id="container" style="width:1600px">
+
+      <div id="header" style="background-color:#4545FF;height:100px">
+        <h1 style="margin-bottom:0;text-align:center;"> Raspberry Pi Car</h1></div>
+      <div id="content1" style="background-color:#EEEEEE;height:610px;width:40%;float:left;">
+        <div class="border_dashed2">
+          <div id="fullsized_image"><img id="fullsized_image_holder" style="margin-top: 0px;"></div>
+
+        </div>
+        <button  onclick="Button_onclick('capture_feed');video_capture()" >擷取圖片</button>
+        <a href="{{ url_for('get_image') }}" download>下載圖片</a>
+
+        <h3 style="margin-bottom:0;text-align:center;"></h3>
+
+      </div>
+      <style>
+        .border_dashed {
+
+          width:445px; height:400px;/*寬度、高度*/
+          border: solid 18px #7878FF;/*邊框樣式、寬度、顏色*/
+          top:50px; left:100px;　/*和頂點的距離、和左邊的距離*/
+        }
+        .border_dashed2 {
+
+          width:445px; height:400px;/*寬度、高度*/
+          border: solid 18px #7878FF;/*邊框樣式、寬度、顏色*/
+          top:50px; left:100px;　/*和頂點的距離、和左邊的距離*/
+        }
+      </style>
+      <div id="Video" style="background-color:#000000;height:610px;width:30%;float:left;">
+        <div id="movtion"style=" width:480px;height:65px;background-color: #898A8C ;text-align:center;"></div>
+        <div class="border_dashed">
+
+
+          <img id="ImgidA"  src="{{ url_for('static', filename='block.png') }}" style="position: absolute; left: 666; top: 191" width="445" height="400" display:none>
+
+
+        </div>
+        <div style=" width:480px;height:110px;background-color: #898A8C ;text-align:center;">
+          <table id="video-button" border="0" align="center">
+
+
+            <tr> 
+
+              <td><input id="x" type=image  src="{{ url_for('static', filename='aron1.png') }}"
+                         onClick="video_on();"
+
+                         /></td>
+              <td>
+                <h3 ><font color="#898A8C">blankkkkkkk</font></h3>
+              </td>
+              <td><input id="y" type=image  src="{{ url_for('static', filename='aron2.png') }}" onClick="video_off();"/></td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+      <div id="content2" style="background-color:#EEEEEE;height:610px;width:30%;float:right;">
+        <div style=" width:0px;height:270px;border:0px #cccccc dashed;"></div>
+        <table id="button-2" border="0" align="center">
+
+
+          <tr>
+
+            <td></td>
+            <td>
+
+              <input id="a" type=image  src="{{ url_for('static', filename='arup.png') }}"
+                     value="車子前進"
+                     onMousedown="Button_onclick('forward');text_forward()"
+                     onMouseup="Button_onclick('stop')" />
+            </td>         
+            <td></td>
+          </tr>
+
+          <tr><td>
+
+            <input id="b" type=image  src="{{ url_for('static', filename='arleft.png') }}"
+                   value="車子左轉"
+                   onMousedown="Button_onclick('left');text_left()"
+                   onMouseup="Button_onclick('stop')" /></td>
+
+            <td>
+
+	<input id="c" type=image  src="{{ url_for('static', filename='warningavatar.png') }}" onclick="Button_onclick('stop')" /></td>
+
+            </td>
+
+            <td>
+
+              <input id="d" type=image  src="{{ url_for('static', filename='arright.png') }}" 
+                     value="車子右轉"
+                     onMousedown="Button_onclick('right');text_right()"
+                     onMouseup="Button_onclick('stop')" /></td>
+
+          <tr>
+            <td></td>
+            <td>
+
+              <input id="e" type=image  src="{{ url_for('static', filename='ardown.png') }}" 
+                     value="車子後退"
+                     onMousedown="Button_onclick('back');text_backward()"
+                     onMouseup="Button_onclick('stop')" />
+
+            </td>
+            <td></td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="footer" style="background-color:#4545FF;height:50px;clear:both;">
+
+
+
+      </div>
+
+
+    </div>
+  </body>
+
+</html>
+<!http://www.blueshop.com.tw/board/show.asp?subcde=BRD200712161753026RM&odr=cdt&odrtyp=0
+http://www.w3schools.com/html/tryit.asp?filename=tryhtml_images_mountain >
