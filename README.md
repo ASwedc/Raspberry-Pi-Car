@@ -14,4 +14,6 @@ http://flask.pocoo.org/docs/0.12/
 ```
    sudo python app.py
 ```
-即可執行
+===================
+Flask影像串流的部分參考自
+https://github.com/miguelgrinberg/flask-video-streaming
