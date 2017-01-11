@@ -1,36 +1,41 @@
 
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8"> <!--網頁內容可顯示中文編碼-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> <!--載入jquery的函式庫-->
 
     <script language="javascript" type="text/javascript">
-      function Button_onclick(direction) {
+      function Button_onclick(direction) //使用動態網頁的方式讓控制車子方向的按鈕和Python主程式連動
+	  {
         $.ajax({ url: '/' + direction });
       }
     </script>  
     <script language="javascript" type="text/javascript">
-      function text_forward() {
+      function text_forward() //在指定區塊顯示車子前進的文字
+	  {
         var x = document.getElementById("a").value;
         document.getElementById("movtion").innerHTML = x;
       }
-      function text_left() {
+      function text_left()    //在指定區塊顯示車子左轉的文字
+	  {
         var x = document.getElementById("b").value;
         document.getElementById("movtion").innerHTML = x;
       }
 
-      function text_right() {
+      function text_right()  //在指定區塊顯示車子右轉的文字
+	  {
         var x = document.getElementById("d").value;
         document.getElementById("movtion").innerHTML = x;
       }
-      function text_backward() {
+      function text_backward()  //在指定區塊顯示車子後退的文字
+	  {
         var x = document.getElementById("e").value;
         document.getElementById("movtion").innerHTML = x;
       }
     </script>
     <script language="javascript" type="text/javascript">
 
-      function video_on()
+      function video_on() //讓攝影機畫面出現的事件
       {
         //讓圖出現
         document.getElementById('ImgidA').style.display = 'block';
@@ -40,7 +45,7 @@
         //改變圖
         document.getElementById('ImgidA').src = "{{ url_for('video_feed') }}";
       }
-      function video_off()
+      function video_off() //讓攝影機的畫面用一張圖覆蓋的事件
       {
         //讓圖出現
         document.getElementById('ImgidA').style.display = 'block';
@@ -63,7 +68,8 @@
     </script>  
 
     <script type="text/javascript">
-      function prepHref(linkElement) {
+      function prepHref(linkElement) //下載所截取圖片的事件
+	  {
         var myDiv = document.getElementById('fullsized_image');
         var myImage = myDiv.children[0];
         linkElement.href = myImage.src;
@@ -73,27 +79,27 @@
     <title> Raspberry Pi Car Web Control</title>
   </head>
 
-	<body oncontextmenu = "return false">
+	<body oncontextmenu = "return false">  <!--鎖右鍵功能-->
 
-    <div>
+	<div id="container" style="width:1600px">
 
-    </div>
-    <div id="container" style="width:1600px">
+        <div id="header" style="background-color:#4545FF;height:100px">
+        
+		<h1 style="margin-bottom:0;text-align:center;"> Raspberry Pi Car</h1>
+		
+		</div>
+		<div id="content1" style="background-color:#EEEEEE;height:610px;width:40%;float:left;">
+			<div class="border_dashed2"><!--顯示已被擷取圖片的區塊-->
+          
+				<div id="fullsized_image"><img id="fullsized_image_holder" style="margin-top: 0px;"></div><!--被擷取的圖片-->
 
-      <div id="header" style="background-color:#4545FF;height:100px">
-        <h1 style="margin-bottom:0;text-align:center;"> Raspberry Pi Car</h1></div>
-      <div id="content1" style="background-color:#EEEEEE;height:610px;width:40%;float:left;">
-        <div class="border_dashed2">
-          <div id="fullsized_image"><img id="fullsized_image_holder" style="margin-top: 0px;"></div>
+			</div>
+        
+				<button  onclick="Button_onclick('capture_feed');video_capture()" >擷取圖片</button><!--截取圖片按鈕-->
+				<a href="{{ url_for('get_image') }}" download>下載圖片</a><!--下載圖片按鈕-->
 
-        </div>
-        <button  onclick="Button_onclick('capture_feed');video_capture()" >擷取圖片</button>
-        <a href="{{ url_for('get_image') }}" download>下載圖片</a>
-
-        <h3 style="margin-bottom:0;text-align:center;"></h3>
-
-      </div>
-      <style>
+		</div>
+        <style><!--邊框設計-->
         .border_dashed {
 
           width:445px; height:400px;/*寬度、高度*/
@@ -106,100 +112,100 @@
           border: solid 18px #7878FF;/*邊框樣式、寬度、顏色*/
           top:50px; left:100px;　/*和頂點的距離、和左邊的距離*/
         }
-      </style>
-      <div id="Video" style="background-color:#000000;height:610px;width:30%;float:left;">
-        <div id="movtion"style=" width:480px;height:65px;background-color: #898A8C ;text-align:center;"></div>
-        <div class="border_dashed">
+        </style>
+        <div id="Video" style="background-color:#000000;height:610px;width:30%;float:left;">
+        <div id="movtion"style=" width:480px;height:65px;background-color: #898A8C ;text-align:center;"></div> <!--顯示車子行進方向文字的區塊-->
+			<div class="border_dashed"><!--攝影機顯示畫面的區塊-->
 
+				<img id="ImgidA"  src="{{ url_for('static', filename='block.png') }}" style="position: absolute; left: 666; top: 191" width="445" height="400" display:none><!--使用python程式讓一張張圖片串流為影像-->
 
-          <img id="ImgidA"  src="{{ url_for('static', filename='block.png') }}" style="position: absolute; left: 666; top: 191" width="445" height="400" display:none>
-
-
-        </div>
+			</div>
         <div style=" width:480px;height:110px;background-color: #898A8C ;text-align:center;">
-          <table id="video-button" border="0" align="center">
+			<table id="video-button" border="0" align="center"><!--攝影機開關按鈕使用表格的方式排版-->
 
+                 <tr> 
 
-            <tr> 
-
-              <td><input id="x" type=image  src="{{ url_for('static', filename='aron1.png') }}"
+                 <td><input id="x" type=image  src="{{ url_for('static', filename='aron1.png') }}"<!--攝影機on的按鈕，執行video_on()的事件-->
                          onClick="video_on();"
-
                          /></td>
-              <td>
-                <h3 ><font color="#898A8C">blankkkkkkk</font></h3>
-              </td>
-              <td><input id="y" type=image  src="{{ url_for('static', filename='aron2.png') }}" onClick="video_off();"/></td>
-            </tr>
-          </table>
+                 <td>
+                 <h3 ><font color="#898A8C">blankkkkkkk</font></h3><!--排版需要-->
+                 </td>
+                <td><input id="y" type=image  src="{{ url_for('static', filename='aron2.png') }}" onClick="video_off();"/></td><!--攝影機off的按鈕，執行video_off()的事件-->
+                </tr>
+			</table>
 
         </div>
-      </div>
+        </div>
 
-      <div id="content2" style="background-color:#EEEEEE;height:610px;width:30%;float:right;">
+		<div id="content2" style="background-color:#EEEEEE;height:610px;width:30%;float:right;">
         <div style=" width:0px;height:270px;border:0px #cccccc dashed;"></div>
-        <table id="button-2" border="0" align="center">
+			<table id="button-2" border="0" align="center"><!--車子行進方向按鈕使用表格的方式排版-->
 
 
-          <tr>
+			<tr>
 
-            <td></td>
-            <td>
+				<td></td>
+				<td>
 
-              <input id="a" type=image  src="{{ url_for('static', filename='arup.png') }}"
-                     value="車子前進"
-                     onMousedown="Button_onclick('forward');text_forward()"
-                     onMouseup="Button_onclick('stop')" />
-            </td>         
-            <td></td>
-          </tr>
+					<input id="a" type=image  src="{{ url_for('static', filename='arup.png') }}" 
+                    value="車子前進"
+                    onMousedown="Button_onclick('forward');text_forward()" 
+                    onMouseup="Button_onclick('stop')" />		<!--按鍵按下時執行Button_onclick('forward')和text_forward()事件，按鍵鬆開時不做任課動作-->                  
+				</td>         
+				<td></td>
+			</tr>
 
-          <tr><td>
+          
+				<td>
 
-            <input id="b" type=image  src="{{ url_for('static', filename='arleft.png') }}"
-                   value="車子左轉"
-                   onMousedown="Button_onclick('left');text_left()"
-                   onMouseup="Button_onclick('stop')" /></td>
+					<input id="b" type=image  src="{{ url_for('static', filename='arleft.png') }}"
+					value="車子左轉"
+					onMousedown="Button_onclick('left');text_left()" 
+					onMouseup="Button_onclick('stop')" />		<!--按鍵按下時執行Button_onclick('left');text_left()事件，按鍵鬆開時不做任課動作-->
+				</td>
 
-            <td>
+				<td>
+				
+				<input id="c" type=image  src="{{ url_for('static', filename='warningavatar.png') }}" onclick="Button_onclick('stop')" />		<!--按鍵按下時不做任課動作-->
+				
+				</td>
 
-	<input id="c" type=image  src="{{ url_for('static', filename='warningavatar.png') }}" onclick="Button_onclick('stop')" /></td>
+            
 
-            </td>
+				<td>
 
-            <td>
+					<input id="d" type=image  src="{{ url_for('static', filename='arright.png') }}" 
+                    value="車子右轉"
+                    onMousedown="Button_onclick('right');text_right()"
+                    onMouseup="Button_onclick('stop')" />		<!--按鍵按下時執行Button_onclick('right');text_right()事件，按鍵鬆開時不做任課動作-->
+				</td>
 
-              <input id="d" type=image  src="{{ url_for('static', filename='arright.png') }}" 
-                     value="車子右轉"
-                     onMousedown="Button_onclick('right');text_right()"
-                     onMouseup="Button_onclick('stop')" /></td>
+			<tr>
+				<td>
+				</td>
+				<td>
 
-          <tr>
-            <td></td>
-            <td>
+					<input id="e" type=image  src="{{ url_for('static', filename='ardown.png') }}" 
+                    value="車子後退"
+                    onMousedown="Button_onclick('back');text_backward()"
+                    onMouseup="Button_onclick('stop')" />		<!--按鍵按下時執行Button_onclick('back');text_backward()事件，按鍵鬆開時不做任課動作-->
 
-              <input id="e" type=image  src="{{ url_for('static', filename='ardown.png') }}" 
-                     value="車子後退"
-                     onMousedown="Button_onclick('back');text_backward()"
-                     onMouseup="Button_onclick('stop')" />
+				</td>
+				<td></td>
+			</tr>
 
-            </td>
-            <td></td>
-          </tr>
+			</table>
+		</div>
 
-        </table>
-      </div>
-
-      <div id="footer" style="background-color:#4545FF;height:50px;clear:both;">
+		<div id="footer" style="background-color:#4545FF;height:50px;clear:both;">
 
 
 
-      </div>
+		</div>
 
 
     </div>
   </body>
 
 </html>
-<!http://www.blueshop.com.tw/board/show.asp?subcde=BRD200712161753026RM&odr=cdt&odrtyp=0
-http://www.w3schools.com/html/tryit.asp?filename=tryhtml_images_mountain >
