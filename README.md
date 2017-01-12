@@ -23,4 +23,5 @@ Flask影像串流的部分參考自
 https://github.com/miguelgrinberg/flask-video-streaming
 ===================
 GPIO接腳位置
+
 ![GPIO](https://pic.pimg.tw/magicjackting/1462987943-3402620679.png)
