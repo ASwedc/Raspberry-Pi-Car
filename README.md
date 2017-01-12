@@ -16,7 +16,7 @@ https://www.raspberrypi.org/downloads/raspbian/
 
 改變Wi-Fi 國家(Change Wi-Fi Country) ，設定為TW Taiwan 。
 
-3.分別把4顆直流馬達、電池和樹梅派電源接到L298N驅動模組
+3.分別把4顆直流馬達、電池和樹梅派電源接到雙L298N驅動模組
 
 接腳位置
 
@@ -26,7 +26,7 @@ https://www.raspberrypi.org/downloads/raspbian/
 
 左右兩邊的GND跟IN1~8都須接上
 
-若電池沒電可暫時先將L298N的5V接腳接到樹梅派的5V接腳上
+若電池沒電可暫時先將雙L298N的5V接腳接到樹梅派的5V接腳上
 
 把樹梅派接上插頭透過GPIO供電給馬達使用
 
