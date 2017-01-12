@@ -25,5 +25,6 @@ https://github.com/miguelgrinberg/flask-video-streaming
 GPIO接腳位置
 
 ![GPIO](https://pic.pimg.tw/magicjackting/1462987943-3402620679.png)
+
 除了GND等特殊功能的接腳只能接對應功能的接腳以外
 其他任何GPIO的接腳都可以使用
