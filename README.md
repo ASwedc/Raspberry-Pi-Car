@@ -34,10 +34,6 @@ https://www.raspberrypi.org/downloads/raspbian/
 
 6.安裝Flask
 
-Flask資料庫 
-
-http://flask.pocoo.org/docs/0.12/
-
 安裝指令
 ```
    $ sudo pip install Flask
@@ -45,6 +41,11 @@ http://flask.pocoo.org/docs/0.12/
 6.接著使用command並切換到放置程式的目錄底下執行app.py
 
 7.接著使用可以連上和樹梅派同一個區網的電腦或手機，在瀏覽器上輸入樹梅派的IP位址並加上port5000(:5000)，就可以開啟操控車子的使用者介面了。
+
+===================
+Flask資料庫 
+
+http://flask.pocoo.org/docs/0.12/
 
 ===================
 Flask影像串流的部分參考自
